@@ -1,0 +1,3 @@
+- Prettify
+- Lint
+- Publish
