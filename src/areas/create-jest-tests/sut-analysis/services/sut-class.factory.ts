@@ -1,10 +1,10 @@
-import { Declaration, getCombinedModifierFlags, ModifierFlags, Node, SourceFile, SyntaxKind, getModifiers, HasModifiers } from "typescript";
-import { Constructor, ElementVisibility, ElementVisibilityType, Method, Parameter, SutClass } from "../models";
+import { Declaration, getCombinedModifierFlags, ModifierFlags, Node, SourceFile, SyntaxKind, getModifiers, HasModifiers } from 'typescript';
+import { Constructor, ElementVisibility, ElementVisibilityType, Method, Parameter, SutClass } from '../models';
 import * as vscode from 'vscode';
 import * as ts from 'typescript';
-import { injectable } from "inversify";
-import { ImportStatement } from "../models/import-statement";
-import path = require("path");
+import { injectable } from 'inversify';
+import { ImportStatement } from '../models/import-statement';
+import path = require('path');
 
 @injectable()
 export class SutClassFactory {
@@ -32,9 +32,7 @@ export class SutClassFactory {
         });
       });
 
-      const importedModule = i.moduleSpecifier.getText()
-      .split('\'').join('')
-      .split('\"').join('');
+      const importedModule = i.moduleSpecifier.getText().split("'").join('').split('"').join('');
 
       importStatements.push(new ImportStatement(importedModule, importedTypeNames));
     });
@@ -51,40 +49,37 @@ export class SutClassFactory {
     const ctor = this.createConstructor(bodyChildren);
 
     const sutFileName = path.parse(sutDoc.fileName).name;
-    const result = new SutClass(
-      sutFileName,
-      ctor,
-      methods,
-      classIdentifier.getText(),
-      importStatements);
+    const result = new SutClass(sutFileName, ctor, methods, classIdentifier.getText(), importStatements);
 
     return result;
   }
 
   private createMethods(bodyChildren: Node[]): Method[] {
-    return bodyChildren.filter(f => f.kind === SyntaxKind.MethodDeclaration).map((method) => {
-      const methodChildren = method.getChildren();
+    return bodyChildren
+      .filter(f => f.kind === SyntaxKind.MethodDeclaration)
+      .map(method => {
+        const methodChildren = method.getChildren();
 
-      // Could also use getCombinedModifierFlags
-      const modifiers = getModifiers(method as HasModifiers);
-      let visibility: ElementVisibility;
-      if (modifiers?.length) {
-        const modifier = modifiers[0].getText();
-        visibility = ElementVisibility.parse(modifier);
-      } else {
-        visibility = ElementVisibility.createUnknowm();
-      }
+        // Could also use getCombinedModifierFlags
+        const modifiers = getModifiers(method as HasModifiers);
+        let visibility: ElementVisibility;
+        if (modifiers?.length) {
+          const modifier = modifiers[0].getText();
+          visibility = ElementVisibility.parse(modifier);
+        } else {
+          visibility = ElementVisibility.createUnknowm();
+        }
 
-      const name = methodChildren.find(f => f.kind === SyntaxKind.Identifier)!.getText();
-      const result = new Method(name, visibility);
-      return result;
-    });
+        const name = methodChildren.find(f => f.kind === SyntaxKind.Identifier)!.getText();
+        const result = new Method(name, visibility);
+        return result;
+      });
   }
 
   private createConstructor(bodyChildren: Node[]): Constructor | undefined {
     const constructorNode = bodyChildren.find(f => f.kind === SyntaxKind.Constructor);
 
-    if (!constructorNode) {
+    if (constructorNode == null) {
       return undefined;
     }
 
@@ -92,7 +87,7 @@ export class SutClassFactory {
       .getChildren()
       .find(f => f.kind === SyntaxKind.SyntaxList && f.getChildren().filter(f => f.kind === SyntaxKind.Parameter).length > 0);
 
-    if (!ctorParams) {
+    if (ctorParams == null) {
       return new Constructor([]);
     }
 
@@ -103,7 +98,6 @@ export class SutClassFactory {
         const paramChildren = ct.getChildren();
 
         const typeRef = paramChildren.find(f => f.kind === SyntaxKind.TypeReference)!;
-
 
         const paramType = paramChildren.find(f => f.kind === SyntaxKind.TypeReference)!.getText();
         const paraName = paramChildren.find(f => f.kind === SyntaxKind.Identifier)!.getText();
@@ -118,13 +112,13 @@ export class SutClassFactory {
   private findClassNode(sourceFile: SourceFile): Node {
     // We expect always 2 nodes here: One SyntaxList and one EndOfFile
     const syntaxListNode = sourceFile.getChildren().find(f => f.kind === SyntaxKind.SyntaxList);
-    if (!syntaxListNode) {
+    if (syntaxListNode == null) {
       throw new Error('Could not find Syntax List Node');
     }
 
     // Well, we expect a ClassDeclaration node
     const classNode = syntaxListNode.getChildren().find(f => f.kind === SyntaxKind.ClassDeclaration);
-    if (!classNode) {
+    if (classNode == null) {
       throw new Error('Could not find Class keyword.');
     }
 

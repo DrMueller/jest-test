@@ -1,6 +1,5 @@
-import { Parameter } from "./parameter.model";
+import { Parameter } from './parameter.model';
 
 export class Constructor {
-  public constructor(public readonly parameters: Parameter[]) {
-  }
+  public constructor(public readonly parameters: Parameter[]) {}
 }

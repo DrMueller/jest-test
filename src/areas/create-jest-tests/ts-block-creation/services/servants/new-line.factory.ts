@@ -1,7 +1,6 @@
-import {addSyntheticLeadingComment } from 'typescript';
+import { addSyntheticLeadingComment } from 'typescript';
 import * as ts from 'typescript';
 import { injectable } from 'inversify';
-
 
 @injectable()
 export class NewLineFactory {

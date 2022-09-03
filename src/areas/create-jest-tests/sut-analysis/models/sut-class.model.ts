@@ -1,6 +1,6 @@
-import { Constructor } from "./constructor.model";
-import { ImportStatement } from "./import-statement";
-import { Method } from "./method.model";
+import { Constructor } from './constructor.model';
+import { ImportStatement } from './import-statement';
+import { Method } from './method.model';
 
 export class SutClass {
   constructor(
@@ -8,5 +8,6 @@ export class SutClass {
     public readonly constuctor: Constructor | undefined,
     public readonly methods: Method[],
     public readonly typeName: string,
-    public readonly imports: ImportStatement[]) {}
+    public readonly imports: ImportStatement[]
+  ) {}
 }

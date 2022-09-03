@@ -2,10 +2,9 @@ import { ElementVisibilityType } from '.';
 import { EnumUtils } from '../../../../infrastructure/utils';
 
 export class ElementVisibility {
-  public constructor(public type: ElementVisibilityType) {
-  }
+  public constructor(public type: ElementVisibilityType) {}
 
-  public static createUnknowm(): ElementVisibility{
+  public static createUnknowm(): ElementVisibility {
     return new ElementVisibility(ElementVisibilityType.unknown);
   }
 

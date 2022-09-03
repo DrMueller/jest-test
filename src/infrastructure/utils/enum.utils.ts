@@ -5,7 +5,7 @@ export class EnumUtils {
     return enumEntry.key;
   }
 
-  private static getEnumKeyValues(enumType: any): {key: number, value: string}[] {
+  private static getEnumKeyValues(enumType: any): Array<{ key: number; value: string }> {
     const parsedEnumKeys = Object.keys(enumType).map(f => {
       return parseInt(f);
     });
@@ -16,7 +16,7 @@ export class EnumUtils {
 
     const result = numericEnumKeys.map(f => {
       const enumValue = enumType[f];
-      return {key: f, value: enumValue};
+      return { key: f, value: enumValue };
     });
 
     return result;
