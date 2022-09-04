@@ -4,26 +4,25 @@ import * as vscode from 'vscode';
 import { JestTestFactory } from './areas/create-jest-tests';
 import { createContainer } from './infrastructure/dependency-injection/container-factory.service';
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
   console.log('Congratulations, your extension "jest-test" is now active!');
 
-  const disposable = vscode.commands.registerCommand('extension.createJestTests', (contextData: any) => {
+  const disposable = vscode.commands.registerCommand('extension.createJestTests', async (contextData: any) => {
     try {
-      if (!contextData) {
+      if (contextData?.fsPath !== undefined) {
         return;
       }
 
       const container = createContainer();
       const testFactory = container.get<JestTestFactory>(JestTestFactory);
       const selectedPath = contextData.fsPath;
-      testFactory.createJestTest(selectedPath);
+      await testFactory.createJestTest(selectedPath);
     } catch (err: any) {
-      debugger;
-      vscode.window.showErrorMessage(err.message);
+      await vscode.window.showErrorMessage(err.message);
     }
   });
 
   context.subscriptions.push(disposable);
 }
 
-export function deactivate() {}
+export function deactivate(): void {}

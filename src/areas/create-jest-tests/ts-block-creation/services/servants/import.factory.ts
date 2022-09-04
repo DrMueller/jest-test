@@ -7,7 +7,6 @@ import { ImportStatement } from '../../../sut-analysis/models/import-statement';
 export class ImportFactory {
   public createImportsForRequiredClasses(sutClass: SutClass): Node[] {
     const sutImport = new ImportStatement(`./${sutClass.fileName}`, [sutClass.typeName]);
-
     const importsToCreate = [sutImport, ...this.getMockImportStatements(sutClass)];
 
     return importsToCreate.map(imp => {

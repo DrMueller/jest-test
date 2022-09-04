@@ -1,5 +1,5 @@
-import { Declaration, getCombinedModifierFlags, ModifierFlags, Node, SourceFile, SyntaxKind, getModifiers, HasModifiers } from 'typescript';
-import { Constructor, ElementVisibility, ElementVisibilityType, Method, Parameter, SutClass } from '../models';
+import { Node, SourceFile, SyntaxKind, getModifiers, HasModifiers } from 'typescript';
+import { Constructor, ElementVisibility, Method, Parameter, SutClass } from '../models';
 import * as vscode from 'vscode';
 import * as ts from 'typescript';
 import { injectable } from 'inversify';
@@ -63,7 +63,7 @@ export class SutClassFactory {
         // Could also use getCombinedModifierFlags
         const modifiers = getModifiers(method as HasModifiers);
         let visibility: ElementVisibility;
-        if (modifiers?.length) {
+        if (modifiers != null && modifiers.length > 0) {
           const modifier = modifiers[0].getText();
           visibility = ElementVisibility.parse(modifier);
         } else {
@@ -96,8 +96,6 @@ export class SutClassFactory {
       .filter(f => f.kind === SyntaxKind.Parameter)
       .map(ct => {
         const paramChildren = ct.getChildren();
-
-        const typeRef = paramChildren.find(f => f.kind === SyntaxKind.TypeReference)!;
 
         const paramType = paramChildren.find(f => f.kind === SyntaxKind.TypeReference)!.getText();
         const paraName = paramChildren.find(f => f.kind === SyntaxKind.Identifier)!.getText();

@@ -1,4 +1,4 @@
-import { factory, Node, addSyntheticLeadingComment } from 'typescript';
+import { factory, Node } from 'typescript';
 import * as ts from 'typescript';
 import { ElementVisibilityType, SutClass } from '../../sut-analysis/models';
 import { inject, injectable } from 'inversify';
@@ -38,8 +38,7 @@ export class SpecBlockFactory {
       ])
     );
 
-    this, this.newLineFactory.prependNewLine(suiteExpr);
-
+    this.newLineFactory.prependNewLine(suiteExpr);
     return [...this.importFactory.createImportsForRequiredClasses(sutClass), suiteExpr];
   }
 

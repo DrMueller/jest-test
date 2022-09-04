@@ -14,7 +14,7 @@ export class JestTestFactory {
   ) {}
 
   public async createJestTest(sutFilePath: string): Promise<void> {
-    vscode.window.withProgress(
+    await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
         cancellable: false,

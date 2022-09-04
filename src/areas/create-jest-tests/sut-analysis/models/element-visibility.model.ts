@@ -13,7 +13,7 @@ export class ElementVisibility {
   }
 
   public static parse(str: string): ElementVisibility {
-    const type = <ElementVisibilityType>EnumUtils.parseEnumEntry(ElementVisibilityType, str);
+    const type = EnumUtils.parseEnumEntry(ElementVisibilityType, str) as ElementVisibilityType;
     const result = new ElementVisibility(type);
 
     return result;

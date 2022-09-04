@@ -2,7 +2,6 @@ import { injectable } from 'inversify';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
-import * as vscode from 'vscode';
 import { NewLineFactory } from '../../ts-block-creation/services/servants/new-line.factory';
 
 @injectable()
