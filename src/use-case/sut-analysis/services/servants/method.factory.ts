@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
-import { getModifiers, HasModifiers, Node, SyntaxKind } from 'typescript';
-import { ElementVisibility, Method } from '../../models';
+import { getCombinedModifierFlags, ModifierFlags, Node, SyntaxKind, MethodDeclaration } from 'typescript';
+import { ElementVisibility, ElementVisibilityType, Method } from '../../models';
 
 @injectable()
 export class MethodFactory {
@@ -9,20 +9,27 @@ export class MethodFactory {
       .filter(f => f.kind === SyntaxKind.MethodDeclaration)
       .map(method => {
         const methodChildren = method.getChildren();
-
-        // Could also use getCombinedModifierFlags
-        const modifiers = getModifiers(method as HasModifiers);
-        let visibility: ElementVisibility;
-        if (modifiers != null && modifiers.length > 0) {
-          const modifier = modifiers[0].getText();
-          visibility = ElementVisibility.parse(modifier);
-        } else {
-          visibility = ElementVisibility.createUnknowm();
-        }
-
+        const visibility = this.readVisibility(method as MethodDeclaration);
         const name = methodChildren.find(f => f.kind === SyntaxKind.Identifier)!.getText();
         const result = new Method(name, visibility);
         return result;
       });
+  }
+
+  private readVisibility(method: MethodDeclaration): ElementVisibility {
+    const modifierFlags = getCombinedModifierFlags(method);
+    let visibilityType: ElementVisibilityType;
+
+    if ((modifierFlags & ModifierFlags.Public) !== 0) {
+      visibilityType = ElementVisibilityType.public;
+    } else if ((modifierFlags & ModifierFlags.Protected) !== 0) {
+      visibilityType = ElementVisibilityType.protected;
+    } else if ((modifierFlags & ModifierFlags.Private) !== 0) {
+      visibilityType = ElementVisibilityType.private;
+    } else {
+      visibilityType = ElementVisibilityType.unknown;
+    }
+
+    return new ElementVisibility(visibilityType);
   }
 }
