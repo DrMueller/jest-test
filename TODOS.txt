@@ -1,2 +1,5 @@
 
 - Publish
+- Refacotirng
+- ELint erweitern
+- 

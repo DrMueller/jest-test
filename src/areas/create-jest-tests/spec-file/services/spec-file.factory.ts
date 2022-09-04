@@ -1,16 +1,16 @@
 import { injectable } from 'inversify';
 import * as fs from 'fs';
-import * as path from 'path';
+import { basename, join } from 'path';
 import * as ts from 'typescript';
-import { NewLineFactory } from '../../ts-block-creation/services/servants/new-line.factory';
+import { NewLineFactory } from '../../spec-creation/services/servants';
 
 @injectable()
 export class SpecFileFactory {
   public async writeSpecFile(sutFilePath: string, nodes: ts.Node[]): Promise<void> {
-    const sutFileName = path.basename(sutFilePath);
+    const sutFileName = basename(sutFilePath);
     const sutPath = sutFilePath.substring(0, sutFilePath.length - sutFileName.length);
 
-    const specFilePath = path.join(sutPath, `${sutFileName}.spec.ts`);
+    const specFilePath = join(sutPath, `${sutFileName}.spec.ts`);
     if (fs.existsSync(specFilePath)) {
       fs.rmSync(specFilePath);
     }

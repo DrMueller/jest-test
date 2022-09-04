@@ -1,16 +1,16 @@
 import { inject, injectable } from 'inversify';
 import { SpecFileFactory } from './spec-file/services/spec-file.factory';
 import { SutClassFactory } from './sut-analysis/services/sut-class.factory';
-import { SpecBlockFactory } from './ts-block-creation/services/spec-block.factory';
 
 import * as vscode from 'vscode';
+import { SpecFactory } from './spec-creation/services';
 
 @injectable()
 export class JestTestFactory {
   constructor(
     @inject(SpecFileFactory) private readonly specFileFactory: SpecFileFactory,
     @inject(SutClassFactory) private readonly sutClassFactory: SutClassFactory,
-    @inject(SpecBlockFactory) private readonly specBlockFactory: SpecBlockFactory
+    @inject(SpecFactory) private readonly specFactory: SpecFactory
   ) {}
 
   public async createJestTest(sutFilePath: string): Promise<void> {
@@ -30,7 +30,7 @@ export class JestTestFactory {
     progress.report({ increment: 0 });
     const sutClass = await this.sutClassFactory.create(sutFilePath);
     progress.report({ increment: 33 });
-    const specNode = this.specBlockFactory.create(sutClass);
+    const specNode = this.specFactory.create(sutClass);
     progress.report({ increment: 66 });
     await this.specFileFactory.writeSpecFile(sutFilePath, specNode);
     progress.report({ increment: 100 });

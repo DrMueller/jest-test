@@ -8,7 +8,7 @@ import { NewLineFactory } from './servants/new-line.factory';
 import { ImportFactory } from './servants/import.factory';
 
 @injectable()
-export class SpecBlockFactory {
+export class SpecFactory {
   constructor(
     @inject(VariableFactory) private readonly variableFactory: VariableFactory,
     @inject(SutSetupFactory) private readonly sutSetupFactory: SutSetupFactory,
