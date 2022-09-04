@@ -1,5 +1,5 @@
 import { ElementVisibilityType } from '.';
-import { EnumUtils } from '../../../../infrastructure/utils';
+import { EnumUtils } from '../../../infrastructure/utils';
 
 export class ElementVisibility {
   public static createUnknowm(): ElementVisibility {

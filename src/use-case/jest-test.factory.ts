@@ -1,15 +1,15 @@
 import * as vscode from 'vscode';
 import { inject, injectable } from 'inversify';
-import { SpecFactory } from './spec-creation/services';
-import { SpecFileFactory } from './spec-file/services/spec-file.factory';
-import { SutClassFactory } from './sut-analysis/services/sut-class.factory';
+import { SpecFileWritingService } from './spec-file/services';
+import { SpecNodeFactory } from './spec-nodes-creation/services';
+import { SutAnalysisService } from './sut-analysis/services/sut-analysis.service';
 
 @injectable()
 export class JestTestFactory {
   constructor(
-    @inject(SpecFileFactory) private readonly specFileFactory: SpecFileFactory,
-    @inject(SutClassFactory) private readonly sutClassFactory: SutClassFactory,
-    @inject(SpecFactory) private readonly specFactory: SpecFactory
+    @inject(SpecFileWritingService) private readonly specFileWriter: SpecFileWritingService,
+    @inject(SutAnalysisService) private readonly sutClassAnalyzer: SutAnalysisService,
+    @inject(SpecNodeFactory) private readonly specNodeFactory: SpecNodeFactory
   ) {}
 
   public async createJestTest(sutFilePath: string): Promise<void> {
@@ -27,11 +27,11 @@ export class JestTestFactory {
 
   private async execute(sutFilePath: string, progress: vscode.Progress<{ message?: string; increment?: number }>): Promise<void> {
     progress.report({ increment: 0 });
-    const sutClass = await this.sutClassFactory.create(sutFilePath);
+    const sutClass = await this.sutClassAnalyzer.analyze(sutFilePath);
     progress.report({ increment: 33 });
-    const specNode = this.specFactory.create(sutClass);
+    const specNodes = this.specNodeFactory.createSpecNodes(sutClass);
     progress.report({ increment: 66 });
-    await this.specFileFactory.writeSpecFile(sutFilePath, specNode);
+    await this.specFileWriter.writeSpecFile(sutFilePath, specNodes);
     progress.report({ increment: 100 });
   }
 }

@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as ts from 'typescript';
 import { basename, join } from 'path';
-import { NewLineFactory } from '../../spec-creation/services/servants';
 import { injectable } from 'inversify';
+import { NewLineFactory } from '../../spec-nodes-creation/services/element-factories';
 
 @injectable()
-export class SpecFileFactory {
+export class SpecFileWritingService {
   public async writeSpecFile(sutFilePath: string, nodes: ts.Node[]): Promise<void> {
     const sutFileName = basename(sutFilePath);
     const sutPath = sutFilePath.substring(0, sutFilePath.length - sutFileName.length);

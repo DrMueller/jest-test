@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { factory } from 'typescript';
 import ts = require('typescript');
 import { Parameter, SutClass } from '../../../sut-analysis/models';
-import { NewLineFactory } from './new-line.factory';
+import { NewLineFactory } from '../element-factories/new-line.factory';
 
 @injectable()
 export class SutSetupFactory {
