@@ -33,31 +33,23 @@ export class MethodSuiteFactory {
   }
 
   private createPreviewSpecBlock(): ts.Block {
-    return factory.createBlock([
-      factory.createExpressionStatement(
-        factory.createCallExpression(factory.createIdentifier('it'), undefined, [
-          factory.createStringLiteral('here could be your test'),
-          factory.createArrowFunction(
-            undefined,
-            undefined,
-            [],
-            undefined,
-            factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            factory.createBlock(
-              [
-                factory.createExpressionStatement(
-                  factory.createCallExpression(
-                    factory.createPropertyAccessExpression(factory.createIdentifier('testee'), factory.createIdentifier('info')),
-                    undefined,
-                    [factory.createStringLiteral('client_secret = geheim')]
-                  )
-                )
-              ],
-              true
+    return factory.createBlock(
+      [
+        factory.createExpressionStatement(
+          factory.createCallExpression(factory.createIdentifier('it'), undefined, [
+            factory.createStringLiteral('here could be your test'),
+            factory.createArrowFunction(
+              undefined,
+              undefined,
+              [],
+              undefined,
+              factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+              factory.createBlock([], true)
             )
-          )
-        ])
-      )
-    ]);
+          ])
+        )
+      ],
+      true
+    );
   }
 }
