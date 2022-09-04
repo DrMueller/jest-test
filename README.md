@@ -4,7 +4,7 @@ Simple generator for a jest spec files:
 
 - Creates a file named `<sut>.spec.ts`
 - Reads class dependencies, sets up mocks and sut
-- Creates tets suite skeleton
+- Creates test suite skeleton
 
 Currently only working with classes.
 

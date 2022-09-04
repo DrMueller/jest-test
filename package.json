@@ -1,6 +1,6 @@
 {
   "name": "jest-test",
-  "displayName": "jest-test",
+  "displayName": "Jest-Test",
   "description": "Boilerplate generator for Jest tests",
   "version": "0.0.1",
   "engines": {
