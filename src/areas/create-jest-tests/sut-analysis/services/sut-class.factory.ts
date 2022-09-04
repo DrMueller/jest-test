@@ -1,9 +1,9 @@
-import { Node, SourceFile, SyntaxKind, getModifiers, HasModifiers } from 'typescript';
-import { Constructor, ElementVisibility, Method, Parameter, SutClass } from '../models';
-import * as vscode from 'vscode';
 import * as ts from 'typescript';
-import { injectable } from 'inversify';
+import * as vscode from 'vscode';
+import { Constructor, ElementVisibility, Method, Parameter, SutClass } from '../models';
+import { HasModifiers, Node, SourceFile, SyntaxKind, getModifiers } from 'typescript';
 import { ImportStatement } from '../models/import-statement';
+import { injectable } from 'inversify';
 import path = require('path');
 
 @injectable()

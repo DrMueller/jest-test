@@ -1,9 +1,8 @@
+import * as vscode from 'vscode';
 import { inject, injectable } from 'inversify';
+import { SpecFactory } from './spec-creation/services';
 import { SpecFileFactory } from './spec-file/services/spec-file.factory';
 import { SutClassFactory } from './sut-analysis/services/sut-class.factory';
-
-import * as vscode from 'vscode';
-import { SpecFactory } from './spec-creation/services';
 
 @injectable()
 export class JestTestFactory {

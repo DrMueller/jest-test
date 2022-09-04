@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { factory, Node } from 'typescript';
+import { Node, factory } from 'typescript';
 import { SutClass } from '../../../sut-analysis/models';
 import { ImportStatement } from '../../../sut-analysis/models/import-statement';
 

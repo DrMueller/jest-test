@@ -1,11 +1,11 @@
-import { factory, Node } from 'typescript';
 import * as ts from 'typescript';
 import { ElementVisibilityType, SutClass } from '../../sut-analysis/models';
+import { Node, factory } from 'typescript';
 import { inject, injectable } from 'inversify';
-import { VariableFactory } from './servants/variable-factory';
-import { SutSetupFactory } from './servants/sut-setup.factory';
-import { NewLineFactory } from './servants/new-line.factory';
 import { ImportFactory } from './servants/import.factory';
+import { NewLineFactory } from './servants/new-line.factory';
+import { SutSetupFactory } from './servants/sut-setup.factory';
+import { VariableFactory } from './servants/variable-factory';
 
 @injectable()
 export class SpecFactory {

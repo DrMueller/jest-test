@@ -1,8 +1,8 @@
-import { injectable } from 'inversify';
 import * as fs from 'fs';
-import { basename, join } from 'path';
 import * as ts from 'typescript';
+import { basename, join } from 'path';
 import { NewLineFactory } from '../../spec-creation/services/servants';
+import { injectable } from 'inversify';
 
 @injectable()
 export class SpecFileFactory {
