@@ -36,15 +36,19 @@
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "test": "node ./out/test/runTest.js",
     "git-clean": "git reset --hard",
     "git-config": "git config --global user.email \"matthiasm@live.de\" && git config --global user.name \"Matthias Mueller\"",
     "vsce-publish": "vsce publish",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
-    "ci:lint": "npm run lint && npm run format:test",
     "format:test": "prettier \"src/**/*.ts\" --list-different",
-    "format:write": "npm run lint:fix && prettier \"src/**/*.{ts,js,md}\" --write"
+    "format:write": "npm run lint:fix && prettier \"src/**/*.{ts,js,md}\" --write",
+    "ci:lint": "npm run lint && npm run format:test",
+    "ci:git-clean": "git reset --hard",
+    "ci:git-config": "git config --global user.email \"matthiasm@live.de\" && git config --global user.name \"Matthias Mueller\"",
+    "ci:vsce-publish": "vsce publish",
+    "ci:build-prod": "webpack --mode production",
+    "ci:test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
