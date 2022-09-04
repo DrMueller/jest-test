@@ -51,14 +51,14 @@ steps:
 
       customCommand: "run ci:git-config"
 
-  - task: Npm@1
-    displayName: "Build Prod"
-    inputs:
-      command: custom
+  # - task: Npm@1
+  #   displayName: "Build Prod"
+  #   inputs:
+  #     command: custom
 
-      verbose: false
+  #     verbose: false
 
-      customCommand: "run ci:build-prod"
+  #     customCommand: "run ci:build-prod"
 
   - task: Npm@1
     displayName: "Update version"

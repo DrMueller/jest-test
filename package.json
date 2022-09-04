@@ -43,8 +43,6 @@
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "git-clean": "git reset --hard",
-    "git-config": "git config --global user.email \"matthiasm@live.de\" && git config --global user.name \"Matthias Mueller\"",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
     "format:test": "prettier \"src/**/*.ts\" --list-different",
