@@ -9,8 +9,9 @@ export class SpecFileWritingService {
   public async writeSpecFile(sutFilePath: string, nodes: ts.Node[]): Promise<void> {
     const parssedSutPath = parse(sutFilePath);
 
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     const specFilePath = join(parssedSutPath.dir, `${parssedSutPath.name}.spec.ts`);
-    if (fs.existsSync(specFilePath)) {
+    if (fs.existsSync(specFilePath) === true) {
       fs.rmSync(specFilePath);
     }
 
