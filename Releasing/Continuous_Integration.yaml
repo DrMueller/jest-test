@@ -23,8 +23,15 @@ steps:
       customCommand: "run ci:lint"
 
   - task: Npm@1
-    displayName: "Execute Tests"
+    displayName: "Build"
     inputs:
       command: custom
       verbose: false
-      customCommand: "run ci:test"
+      customCommand: "run package"
+
+  # - task: Npm@1
+  #   displayName: "Execute Tests"
+  #   inputs:
+  #     command: custom
+  #     verbose: false
+  #     customCommand: "run ci:test"
