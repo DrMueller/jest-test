@@ -11,10 +11,10 @@ resources:
 variables:
 - name: isMaster
   value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/master')]
-${{ if eq(isMaster, eq(variables.isMaster, true) }}:
+${{ if eq(variables.isMaster, true) }}:
 - name: version
   value: $(Build.BuildNumber)
-${{ if eq(isMaster, eq(variables.isMaster, false) }}:
+${{ if eq(variables.isMaster, false) }}:
 - name: version
   value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
 
