@@ -27,4 +27,4 @@ steps:
     inputs:
       command: custom
       verbose: false
-      customCommand: "run ci:execute-tests"
+      customCommand: "run ci:test"
