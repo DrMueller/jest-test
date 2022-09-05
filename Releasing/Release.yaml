@@ -1,0 +1,59 @@
+name: 1.1$(rev:.r) # build numbering format
+
+resources:
+  pipelines:
+  - pipeline: release-pip # Name of the pipeline resource
+    source: 01-<ExtensionName>-Create-Artifacts # Name of the pipeline referenced by the pipeline resource
+    trigger: 
+      branches:
+      - refs/heads/master^
+
+variables:
+- name: isMaster
+  value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/master')]
+${{ if eq(isMaster, eq(variables.isMaster, true) }}:
+- name: version
+  value: $(Build.BuildNumber)
+${{ if eq(isMaster, eq(variables.isMaster, false) }}:
+- name: version
+  value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
+
+queue:
+  name: Hosted VS2017
+  demands: npm
+
+steps:
+  # - task: Npm@1
+  #   displayName: "NPM CI"
+  #   inputs:
+  #     command: custom
+  #     verbose: false
+  #     customCommand: ci
+
+  - task: Npm@1
+    displayName: "Git Clean"
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: "run ci:git-clean"
+
+  - task: Npm@1
+    displayName: "Git Config"
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: "run ci:git-config"
+
+  - task: Npm@1
+    displayName: "Update version"
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: "version $(version)"
+
+  - task: Npm@1
+    displayName: "Publish"
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: "run ci:vsce-publish -- -p $(VscePublishToken)"
