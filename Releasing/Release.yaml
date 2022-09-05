@@ -3,7 +3,7 @@ name: 1.1$(rev:.r) # build numbering format
 resources:
   pipelines:
   - pipeline: release-pip # Name of the pipeline resource
-    source: 01-<ExtensionName>-Create-Artifacts # Name of the pipeline referenced by the pipeline resource
+    source: 01-JestTest-Continuous-Integration # Name of the pipeline referenced by the pipeline resource
     trigger: 
       branches:
       - refs/heads/master^
