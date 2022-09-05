@@ -18,9 +18,11 @@ ${{ if eq(isMaster, eq(variables.isMaster, false) }}:
 - name: version
   value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
 
-queue:
-  name: Hosted VS2017
+pool:
+  name: Azure Pipelines
+  vmImage: "windows-latest"
   demands: npm
+
 
 steps:
   # - task: Npm@1

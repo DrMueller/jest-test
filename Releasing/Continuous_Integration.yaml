@@ -2,8 +2,9 @@ name: 1.1$(rev:.r) # build numbering format
 
 resources:
   - repo: self
-queue:
-  name: Hosted VS2017
+pool:
+  name: Azure Pipelines
+  vmImage: "windows-latest"
   demands: npm
 
 steps:
@@ -18,16 +19,12 @@ steps:
     displayName: "Lint"
     inputs:
       command: custom
-
       verbose: false
-
       customCommand: "run ci:lint"
 
   - task: Npm@1
     displayName: "Execute Tests"
     inputs:
       command: custom
-
       verbose: false
-
       customCommand: "run ci:execute-tests"
