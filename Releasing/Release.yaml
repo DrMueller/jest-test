@@ -51,7 +51,7 @@ steps:
     inputs:
       command: custom
       verbose: false
-      customCommand: "version $(version)"
+      customCommand: "version variables.version"
 
   - task: Npm@1
     displayName: "Publish"
