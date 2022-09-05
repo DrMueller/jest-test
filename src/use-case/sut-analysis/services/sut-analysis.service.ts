@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as vscode from 'vscode';
 import { SutClass } from '../models';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import path = require('path');
 import { ImportStatementFactory } from './servants/import-statement.factory';
 import { ConsructorFactory } from './servants';
@@ -11,10 +11,10 @@ import { ClassAnalysisService } from './servants/class-analysis.service';
 @injectable()
 export class SutAnalysisService {
   constructor(
-    @inject(ClassAnalysisService) private readonly classAnalyzer: ClassAnalysisService,
-    @inject(ImportStatementFactory) private readonly importStatementFactory: ImportStatementFactory,
-    @inject(ConsructorFactory) private readonly constructorFactory: ConsructorFactory,
-    @inject(MethodFactory) private readonly methodFactory: MethodFactory
+    private readonly classAnalyzer: ClassAnalysisService,
+    private readonly importStatementFactory: ImportStatementFactory,
+    private readonly constructorFactory: ConsructorFactory,
+    private readonly methodFactory: MethodFactory
   ) {}
 
   public async analyze(sutFilePath: string): Promise<SutClass> {

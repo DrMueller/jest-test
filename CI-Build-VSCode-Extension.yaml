@@ -33,15 +33,6 @@ steps:
 
       customCommand: "run ci:git-clean"
 
-  # - task: Npm@1
-  #   displayName: "Execute Tests"
-  #   inputs:
-  #     command: custom
-
-  #     verbose: false
-
-  #     customCommand: "run ci:test"
-
   - task: Npm@1
     displayName: "Git Config"
     inputs:
@@ -50,15 +41,6 @@ steps:
       verbose: false
 
       customCommand: "run ci:git-config"
-
-  # - task: Npm@1
-  #   displayName: "Build Prod"
-  #   inputs:
-  #     command: custom
-
-  #     verbose: false
-
-  #     customCommand: "run ci:build-prod"
 
   - task: Npm@1
     displayName: "Update version"

@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { SutClass } from '../../sut-analysis/models';
 import { Node, factory } from 'typescript';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { ImportFactory } from './element-factories/import.factory';
 import { NewLineFactory } from './element-factories/new-line.factory';
 import { SutSetupFactory } from './component-factories/sut-setup.factory';
@@ -11,12 +11,12 @@ import { MethodSuiteFactory, VariableDeclarationFactory } from './component-fact
 @injectable()
 export class SpecNodeFactory {
   constructor(
-    @inject(VariableFactory) private readonly variableFactory: VariableFactory,
-    @inject(SutSetupFactory) private readonly sutSetupFactory: SutSetupFactory,
-    @inject(NewLineFactory) private readonly newLineFactory: NewLineFactory,
-    @inject(ImportFactory) private readonly importFactory: ImportFactory,
-    @inject(MethodSuiteFactory) private readonly methodSuiteFactory: MethodSuiteFactory,
-    @inject(VariableDeclarationFactory) private readonly variableDeclarationFactory: VariableDeclarationFactory
+    private readonly variableFactory: VariableFactory,
+    private readonly sutSetupFactory: SutSetupFactory,
+    private readonly newLineFactory: NewLineFactory,
+    private readonly importFactory: ImportFactory,
+    private readonly methodSuiteFactory: MethodSuiteFactory,
+    private readonly variableDeclarationFactory: VariableDeclarationFactory
   ) {}
 
   public createSpecNodes(sutClass: SutClass): Node[] {

@@ -1,4 +1,4 @@
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { factory } from 'typescript';
 import ts = require('typescript');
 import { Parameter, SutClass } from '../../../sut-analysis/models';
@@ -6,7 +6,7 @@ import { NewLineFactory } from '../element-factories/new-line.factory';
 
 @injectable()
 export class SutSetupFactory {
-  constructor(@inject(NewLineFactory) private readonly newLineFactory: NewLineFactory) {}
+  constructor(private readonly newLineFactory: NewLineFactory) {}
 
   public create(sutClass: SutClass): ts.ExpressionStatement {
     const mockAssignments = sutClass.constuctor?.parameters.map(param => this.createAssignExpression(param)) ?? [];

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { SpecFileWritingService } from './spec-file/services';
 import { SpecNodeFactory } from './spec-nodes-creation/services';
 import { SutAnalysisService } from './sut-analysis/services/sut-analysis.service';
@@ -7,9 +7,9 @@ import { SutAnalysisService } from './sut-analysis/services/sut-analysis.service
 @injectable()
 export class JestTestFactory {
   constructor(
-    @inject(SpecFileWritingService) private readonly specFileWriter: SpecFileWritingService,
-    @inject(SutAnalysisService) private readonly sutClassAnalyzer: SutAnalysisService,
-    @inject(SpecNodeFactory) private readonly specNodeFactory: SpecNodeFactory
+    private readonly specFileWriter: SpecFileWritingService,
+    private readonly sutClassAnalyzer: SutAnalysisService,
+    private readonly specNodeFactory: SpecNodeFactory
   ) {}
 
   public async createJestTest(sutFilePath: string): Promise<void> {

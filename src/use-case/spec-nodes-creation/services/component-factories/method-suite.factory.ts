@@ -1,4 +1,4 @@
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { factory } from 'typescript';
 import ts = require('typescript');
 import { ElementVisibilityType, SutClass } from '../../../sut-analysis/models';
@@ -6,7 +6,7 @@ import { NewLineFactory } from '../element-factories/new-line.factory';
 
 @injectable()
 export class MethodSuiteFactory {
-  constructor(@inject(NewLineFactory) private readonly newLineFactory: NewLineFactory) {}
+  constructor(private readonly newLineFactory: NewLineFactory) {}
 
   public createSuitesForMethods(sutClass: SutClass): ts.Statement[] {
     const publicMethods = sutClass.methods.filter(f => f.visibility.type !== ElementVisibilityType.private);
