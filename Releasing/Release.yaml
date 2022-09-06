@@ -9,14 +9,15 @@ resources:
       - refs/heads/master^
 
 variables:
-- name: isMaster
-  value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/master')]
-- ${{ if eq(variables.isMaster, true) }}:
+- name: temp
+  value: 1
+  ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}: 
   - name: appVersion
     value: $(Build.BuildNumber)
-- ${{ if eq(variables.isMaster, false) }}:
+  ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}: 
   - name: appVersion
     value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
+
 
 pool:
   name: Azure Pipelines
