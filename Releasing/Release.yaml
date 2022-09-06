@@ -2,17 +2,17 @@ name: 1.1$(rev:.r) # build numbering format
 
 resources:
   pipelines:
-  - pipeline: release-pip # Name of the pipeline resource
-    source: 01-JestTest-Continuous-Integration # Name of the pipeline referenced by the pipeline resource
-    trigger: 
-      branches:
-      - refs/heads/master^
+    - pipeline: release-pip # Name of the pipeline resource
+      source: 01-JestTest-Continuous-Integration # Name of the pipeline referenced by the pipeline resource
+      trigger:
+        branches:
+          - refs/heads/master^
 
 variables:
-  ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}: 
-    buildVersion:  $(Build.BuildNumber)
-  ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}: 
-    buildVersion: format('{0}-beta-{1}', "$(Build.BuildNumber)", ${{ variables['Build.SourceBranchName'] }})
+  ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}:
+    buildVersion: $(Build.BuildNumber)
+  ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}:
+    buildVersion: ${{ format('{0}-beta-{1}', "$(Build.BuildNumber)", ${{ variables['Build.SourceBranchName'] }}) }}
 
 pool:
   name: Azure Pipelines
