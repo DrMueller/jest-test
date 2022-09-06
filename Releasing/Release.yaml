@@ -1,5 +1,7 @@
 name: 1.1$(rev:.r) # build numbering format
 
+trigger: none
+
 resources:
   pipelines:
     - pipeline: release-pip # Name of the pipeline resource
@@ -12,8 +14,8 @@ variables:
   ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}:
     buildVersion: $(Build.BuildNumber)
   ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}:
-    # buildVersion: ${{ format('{0}-beta-{1}', $(Build.BuildNumber), ${{ variables['Build.SourceBranchName'] }}) }}
-    buildVersion: ${{ format('{0}-beta-{1}', '$(Build.BuildNumber)', 'test') }}
+    # buildVersion: ${{ format('{0}-beta-{1}', $(Build.BuildNumber), ) }}
+    buildVersion: ${{ format('{0}-beta-{1}', '$(Build.BuildNumber)', '${{ variables['Build.SourceBranchName'] }}') }}
 
 pool:
   name: Azure Pipelines
@@ -21,6 +23,9 @@ pool:
   demands: npm
 
 steps:
+  - script: |
+      echo "Version: $(buildVersion)"
+
   - task: Npm@1
     displayName: "NPM CI"
     inputs:
