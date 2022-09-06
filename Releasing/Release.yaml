@@ -11,7 +11,7 @@ resources:
           - refs/heads/main^
 
 variables:
-- group: 'Jest-Test'
+- group: Jest-Test
 - name: buildVersion
   ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
     value:  $(Build.BuildNumber)
@@ -26,6 +26,7 @@ pool:
 steps:
   - script: |
       echo "Version: $(buildVersion)"
+      echo "Pat: $(VscePublishToken)"
     displayName: "Print version"
 
   - task: Npm@1
