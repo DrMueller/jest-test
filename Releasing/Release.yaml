@@ -14,7 +14,7 @@ variables:
   ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
     buildVersion: $(Build.BuildNumber)
   ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
-    buildVersion: ${{ format('{0}-beta-{1}', '$(Build.BuildNumber)', '${{ variables['Build.SourceBranchName'] }}') }}
+    buildVersion: ${{ format('{0}-beta-{1}', '$(Build.BuildNumber)', '${{ variables["Build.SourceBranchName"] }}') }}
 
 pool:
   name: Azure Pipelines
