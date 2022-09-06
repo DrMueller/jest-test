@@ -11,28 +11,25 @@ resources:
 variables:
 - name: isMaster
   value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/master')]
-# - ${{ if eq(variables.isMaster, true) }}:
-#   - name: version
-#     value: $(Build.BuildNumber)
-# - ${{ if eq(variables.isMaster, false) }}:
-#   - name: version
-#     value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
-- name: appVersion
-  value: $(Build.BuildNumber)
+- ${{ if eq(variables.isMaster, true) }}:
+  - name: appVersion
+    value: $(Build.BuildNumber)
+- ${{ if eq(variables.isMaster, false) }}:
+  - name: appVersion
+    value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
 
 pool:
   name: Azure Pipelines
   vmImage: "windows-latest"
   demands: npm
 
-
 steps:
-  # - task: Npm@1
-  #   displayName: "NPM CI"
-  #   inputs:
-  #     command: custom
-  #     verbose: false
-  #     customCommand: ci
+  - task: Npm@1
+    displayName: "NPM CI"
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: ci
 
   - task: Npm@1
     displayName: "Git Clean"
