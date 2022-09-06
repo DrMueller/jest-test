@@ -10,9 +10,9 @@ resources:
 
 variables:
   ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}: 
-    buildVersion: ${{ variables['mavenVersion'] }}
+    buildVersion:  $(Build.BuildNumber)
   ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}: 
-    buildVersion: ${{ variables['Build.SourceBranchName'] }}
+    buildVersion: format('{0}-beta-{1}', "$(Build.BuildNumber)", ${{ variables['Build.SourceBranchName'] }})
 
 pool:
   name: Azure Pipelines
