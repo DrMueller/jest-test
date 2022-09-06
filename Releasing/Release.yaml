@@ -9,14 +9,10 @@ resources:
       - refs/heads/master^
 
 variables:
-- name: temp
-  value: 1
-  ${{ if endsWith( variables['Build.SourceBranchName'], 'master' ) }}: 
-    - name: appVersion
-      value: $(Build.BuildNumber)
-  ${{ else }}: 
-    - name: appVersion
-      value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
+  ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}: 
+    buildVersion: ${{ variables['mavenVersion'] }}
+  ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}: 
+    buildVersion: ${{ variables['Build.SourceBranchName'] }}
 
 pool:
   name: Azure Pipelines
@@ -50,7 +46,7 @@ steps:
     inputs:
       command: custom
       verbose: false
-      customCommand: "version $(appVersion)"
+      customCommand: "version $(buildVersion)"
 
   - task: Npm@1
     displayName: "Publish"
