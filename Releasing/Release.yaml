@@ -17,7 +17,7 @@ variables:
 # - ${{ if eq(variables.isMaster, false) }}:
 #   - name: version
 #     value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
-- name: version
+- name: appVersion
   value: $(Build.BuildNumber)
 
 pool:
@@ -53,7 +53,7 @@ steps:
     inputs:
       command: custom
       verbose: false
-      customCommand: "version variables.version"
+      customCommand: "version $(appVersion)"
 
   - task: Npm@1
     displayName: "Publish"
