@@ -11,10 +11,12 @@ resources:
           - refs/heads/main^
 
 variables:
+- group: 'Jest-Test'
+- name: buildVersion
   ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
-    buildVersion: $(Build.BuildNumber)
+    value:  $(Build.BuildNumber)
   ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
-    buildVersion: ${{ format('{0}-beta-{1}', '$(Build.BuildNumber)', '${{ variables["Build.SourceBranchName"] }}') }}
+    value: ${{ format('{0}-beta-{1}', '$(Build.BuildNumber)', '${{ variables["Build.SourceBranchName"] }}') }}
 
 pool:
   name: Azure Pipelines
@@ -24,6 +26,7 @@ pool:
 steps:
   - script: |
       echo "Version: $(buildVersion)"
+    displayName: "Print version"
 
   - task: Npm@1
     displayName: "NPM CI"
