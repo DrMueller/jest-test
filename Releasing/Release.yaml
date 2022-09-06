@@ -11,13 +11,12 @@ resources:
 variables:
 - name: temp
   value: 1
-  ${{ if eq( variables['Build.SourceBranchName'], 'master' ) }}: 
-  - name: appVersion
-    value: $(Build.BuildNumber)
-  ${{ if ne( variables['Build.SourceBranchName'], 'master' ) }}: 
-  - name: appVersion
-    value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
-
+  ${{ if endsWith( variables['Build.SourceBranchName'], 'master' ) }}: 
+    - name: appVersion
+      value: $(Build.BuildNumber)
+  ${{ else }}: 
+    - name: appVersion
+      value: format('{0}{1}', "$(Build.BuildNumber)", ´-beta´])
 
 pool:
   name: Azure Pipelines
